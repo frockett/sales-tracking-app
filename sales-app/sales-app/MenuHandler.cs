@@ -24,8 +24,8 @@ internal class MenuHandler
         AnsiConsole.Clear();
 
         string[] menuOptions =
-                {"Insert Item", "Modify Item",
-                "Delete Item", "BLANK",
+                {"Insert Item",
+                "Delete Item", "Print All",
                 "Generate Reports", "DEVELOPER TOOLS: Seed Data", "Exit Program",};
 
         string choice = AnsiConsole.Prompt(
@@ -47,21 +47,18 @@ internal class MenuHandler
                 HandleInsertItem();
                 break;
             case 2:
-                //HandleUpdateRecord();
+                HandleDeleteItem();
                 break;
             case 3:
-                //HandleDeleteRecord();
+                displayService.PrintItemList(itemController.FetchAllItems());
                 break;
             case 4:
-                //HandleStartCodingSession();
+                HandleReports();
                 break;
             case 5:
-                HandleReportSubmenu();
-                break;
-            case 6:
                 HandleSeedData();
                 break;
-            case 7:
+            case 6:
                 Environment.Exit(0);
                 break;
         }
@@ -70,6 +67,13 @@ internal class MenuHandler
     private void HandleInsertItem()
     {
         itemController.InsertItem();
+        ShowMainMenu();
+    }
+
+    private void HandleDeleteItem()
+    {
+        displayService.PrintItemList(itemController.FetchAllItems(), false);
+        itemController.DeleteItem();
         ShowMainMenu();
     }
 
@@ -88,10 +92,13 @@ internal class MenuHandler
         }
     }
 
-    private void HandleReportSubmenu()
+    private void HandleReports()
     {
+        displayService.PrintItemList(itemController.FetchItems());
+        ShowMainMenu();
+        /*
         string[] reportMenuOptions =
-        {"Display All Items in Database", "Display Sales by Month", "Display Monthly Averages",
+        {"Display All Items in Database", "Display Sales for Month", "Display Sales for Year",
                 "Display Goal Report - UNDER CONSTRUCTION", "Return to Main Menu",};
 
         string choice = AnsiConsole.Prompt(
@@ -110,9 +117,11 @@ internal class MenuHandler
                 ShowMainMenu();
                 break;
             case 2:
+                // TODO display sales for the month
                 ShowMainMenu();
                 break;
             case 3:
+                // TODO display yearly report incl avg monthly revenue and profit
                 ShowMainMenu();
                 break;
             case 4:
@@ -127,5 +136,7 @@ internal class MenuHandler
                 AnsiConsole.Markup("[red]Invalid input![/]");
                 break;
         }
+
+        */
     }
 }

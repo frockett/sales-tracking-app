@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Shared;
+using System.Text;
 
 namespace DataAccess;
 
@@ -47,7 +48,7 @@ public class SqliteDataAccess : IDataAccess
             connection.Open();
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = $@"INSERT INTO sales(Brand, Type, Cost, Sale_price, Profit, Margin, Date_of_sale, Platform, Description)
-                                    VALUES ('{item.Brand}', '{item.Type}', {item.Cost}, {item.SalePrice}, {item.Profit}, {item.Margin}, '{item.DateOfSale}', '{item.Platform}','{item.Description}')";
+                                    VALUES ('{item.Brand}', '{item.Type}', {item.Cost}, {item.SalePrice}, {item.Profit}, {item.Margin}, '{item.DateOfSale.ToString("yyyy-MM-dd")}', '{item.Platform}','{item.Description}')";
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -56,13 +57,16 @@ public class SqliteDataAccess : IDataAccess
     {
         throw new NotImplementedException ();
     }
-    public bool ValidateItemById(int id)
+    public void DeleteItem(int id)
     {
-        throw new NotImplementedException();
-    }
-    public void DeleteItem()
-    {
-        throw new NotImplementedException();
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM sales WHERE id = {id}";
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
     }
     public List<Item> GetAllItems()
     {
@@ -98,6 +102,85 @@ public class SqliteDataAccess : IDataAccess
             }
             connection.Close();
             return items;
+        }
+    }
+    public List<Item> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    {
+        List<Item> items = new List<Item>();
+
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            var query = new StringBuilder($"Select * FROM sales");
+
+            if (year.HasValue)
+            {
+                query.Append($@" WHERE strftime('%Y', Date_of_sale) = '{year:D4}'");
+            }
+
+            if (month.HasValue)
+            {
+                query.Append($" AND strftime('%m', Date_of_sale) = '{month:00}'");
+            }
+
+            if (!string.IsNullOrEmpty(groupBy))
+            {
+                query.Append($" GROUP BY {groupBy}");
+            }
+
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                query.Append($" ORDER BY {orderBy}");
+            }
+
+            Console.WriteLine(query.ToString());
+            SqliteCommand command = connection.CreateCommand();
+            command.CommandText = query.ToString();
+
+            SqliteDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    items.Add(new Item
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Brand = reader.GetString(reader.GetOrdinal("Brand")),
+                        Type = reader.GetString(reader.GetOrdinal("Type")),
+                        Cost = reader.GetInt32(reader.GetOrdinal("Cost")),
+                        SalePrice = reader.GetInt32(reader.GetOrdinal("Sale_price")),
+                        Profit = reader.GetInt32(reader.GetOrdinal("Profit")),
+                        Margin = reader.GetFloat(reader.GetOrdinal("Margin")),
+                        DateOfSale = DateTime.Parse(reader.GetString(reader.GetOrdinal("Date_of_sale"))),
+                        Platform = reader.GetString(reader.GetOrdinal("Platform")),
+                        Description = reader.GetString(reader.GetOrdinal("Description")),
+                    });
+                }
+            }
+            connection.Close();
+            return items;
+        }
+    }
+
+    public bool ValidateItemById(int id)
+    {
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $@"SELECT EXISTS(SELECT 1 FROM sales WHERE Id = {id})";
+            int checkQuery = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+            if (checkQuery == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 

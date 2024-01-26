@@ -6,6 +6,7 @@ public static class ItemMapper
 {
     public static ItemDTO ToDTO(Item item)
     {
+        //Console.WriteLine($"Current item ID is {item.Id}");
         return new ItemDTO
         {
             Id = item.Id,

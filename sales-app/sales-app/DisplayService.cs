@@ -5,8 +5,8 @@ namespace sales_app;
 
 internal class DisplayService
 {
-    
-    public void PrintItemList(List<ItemDTO> itemDTOs)
+    //bool shouldWaitForInput;
+    public void PrintItemList(List<ItemDTO> itemDTOs, bool shouldWait = true)
     {
         Table table = new Table();
         table.AddColumns(new[] { "Id", "Brand", "Type", "Cost", "Sale Price", "Profit", "Margin", "Date of Sale", "Platform", "Description" });
@@ -18,8 +18,12 @@ internal class DisplayService
                         item.DateOfSale.ToString("MM-dd"), item.Platform, item.Description);
         }
         AnsiConsole.Write(table);
-        AnsiConsole.WriteLine("Press enter to continue");
-        Console.ReadLine();
+        AnsiConsole.WriteLine();
+        if (shouldWait)
+        {
+            AnsiConsole.WriteLine("Press enter to continue");
+            Console.ReadLine();
+        }
     }
     /*
     public void PrintMonthlyAverages(List<CodingSession> sessions)
