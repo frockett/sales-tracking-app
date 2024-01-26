@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "sales-app": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\itscr\\source\\repos\\sales-app\\sales-app\\sales-app\\"
+    }
+  }
+}
