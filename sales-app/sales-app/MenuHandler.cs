@@ -11,12 +11,12 @@ namespace sales_app;
 internal class MenuHandler
 {
     private readonly ItemController itemController;
-    //private readonly DisplayService displayService;
+    private readonly DisplayService displayService;
 
-    public MenuHandler(ItemController itemController)
+    public MenuHandler(ItemController itemController, DisplayService display)
     {
         this.itemController = itemController;
-        //displayService = display;
+        displayService = display;
     }
 
     public void ShowMainMenu()
@@ -44,7 +44,7 @@ internal class MenuHandler
         switch (menuSelection)
         {
             case 1:
-                //HandleInsertRecord();
+                HandleInsertItem();
                 break;
             case 2:
                 //HandleUpdateRecord();
@@ -56,7 +56,7 @@ internal class MenuHandler
                 //HandleStartCodingSession();
                 break;
             case 5:
-                //HandleReportSubmenu();
+                HandleReportSubmenu();
                 break;
             case 6:
                 HandleSeedData();
@@ -65,6 +65,12 @@ internal class MenuHandler
                 Environment.Exit(0);
                 break;
         }
+    }
+
+    private void HandleInsertItem()
+    {
+        itemController.InsertItem();
+        ShowMainMenu();
     }
 
     private void HandleSeedData()
@@ -79,6 +85,47 @@ internal class MenuHandler
         {
             itemController.SeedJanData();
             ShowMainMenu();
+        }
+    }
+
+    private void HandleReportSubmenu()
+    {
+        string[] reportMenuOptions =
+        {"Display All Items in Database", "Display Sales by Month", "Display Monthly Averages",
+                "Display Goal Report - UNDER CONSTRUCTION", "Return to Main Menu",};
+
+        string choice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+            .Title("Which operation would you like to perform? Use [green]arrow[/] and [green]enter[/] keys to make a selection.")
+            .PageSize(10)
+            .MoreChoicesText("Keep scrolling for more options")
+            .AddChoices(reportMenuOptions));
+
+        int menuSelection = Array.IndexOf(reportMenuOptions, choice) + 1;
+
+        switch (menuSelection)
+        {
+            case 1:
+                displayService.PrintItemList(itemController.FetchAllItems());
+                ShowMainMenu();
+                break;
+            case 2:
+                ShowMainMenu();
+                break;
+            case 3:
+                ShowMainMenu();
+                break;
+            case 4:
+                AnsiConsole.Markup("Sorry, this feature isn't ready yet! The developer hasn't met his goal either!!");
+                Console.ReadLine();
+                ShowMainMenu();
+                break;
+            case 5:
+                ShowMainMenu();
+                break;
+            default:
+                AnsiConsole.Markup("[red]Invalid input![/]");
+                break;
         }
     }
 }

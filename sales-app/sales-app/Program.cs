@@ -13,10 +13,10 @@ internal class Program
         var dataAccess = InitializeSqliteDatabase();
 
         //var stopwatchService = new StopwatchService();
-        //var inputValidationService = new UserInputValidationService();
-        var itemController = new ItemController(dataAccess);
-        //var displayService = new DisplayService();
-        var menuHandler = new MenuHandler(itemController);
+        var inputValidation = new InputValidation();
+        var itemController = new ItemController(dataAccess, inputValidation);
+        var displayService = new DisplayService();
+        var menuHandler = new MenuHandler(itemController, displayService);
 
         menuHandler.ShowMainMenu();
     }

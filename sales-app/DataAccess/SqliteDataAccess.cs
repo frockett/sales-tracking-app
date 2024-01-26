@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
+using Shared;
 
 namespace DataAccess;
 
@@ -39,11 +40,19 @@ public class SqliteDataAccess : IDataAccess
         IConfiguration configuration = builder.Build();
         return configuration.GetConnectionString(desiredString);
     }
-    public void InsertItem()
+    public void InsertItem(Item item)
     {
-        throw new NotImplementedException();
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $@"INSERT INTO sales(Brand, Type, Cost, Sale_price, Profit, Margin, Date_of_sale, Platform, Description)
+                                    VALUES ('{item.Brand}', '{item.Type}', {item.Cost}, {item.SalePrice}, {item.Profit}, {item.Margin}, '{item.DateOfSale}', '{item.Platform}','{item.Description}')";
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
     }
-    public void UpdateItem()
+    public void UpdateItem(Item item)
     {
         throw new NotImplementedException ();
     }
@@ -54,6 +63,42 @@ public class SqliteDataAccess : IDataAccess
     public void DeleteItem()
     {
         throw new NotImplementedException();
+    }
+    public List<Item> GetAllItems()
+    {
+        List<Item> items = new List<Item>();
+
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $"SELECT * FROM sales";
+
+            SqliteDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    items.Add(
+                        new Item
+                        {
+                            Id = reader.GetInt32(0),
+                            Brand = reader.GetString(1),
+                            Type = reader.GetString(2),
+                            Cost = reader.GetInt32(3),
+                            SalePrice = reader.GetInt32(4),
+                            Profit = reader.GetInt32(5),
+                            Margin  = reader.GetInt32(6),
+                            DateOfSale = DateTime.Parse(reader.GetString(7)),
+                            Platform = reader.GetString(8),
+                            Description = reader.GetString(9),
+                        });
+                }
+            }
+            connection.Close();
+            return items;
+        }
     }
 
     public int SeedJanData()

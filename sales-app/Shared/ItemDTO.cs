@@ -1,8 +1,6 @@
-﻿
+﻿namespace Shared;
 
-namespace Shared;
-
-internal class ItemDTO
+public class ItemDTO
 {
     public int Id { get; set; }
     public string? Brand { get; set; }
