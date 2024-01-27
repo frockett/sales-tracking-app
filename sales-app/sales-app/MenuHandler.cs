@@ -26,8 +26,11 @@ internal class MenuHandler
 
         string[] menuOptions =
                 {"Insert Item",
-                "Delete Item", "Print All",
-                "Generate Reports", "DEVELOPER TOOLS: Seed Data", "Exit Program",};
+                "Delete Item",
+                "Generate Reports", 
+                "Export Database to CSV",
+                "DEVELOPER TOOLS: Seed Data", 
+                "Exit Program",};
 
         string choice = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
@@ -51,10 +54,10 @@ internal class MenuHandler
                 HandleDeleteItem();
                 break;
             case 3:
-                displayService.PrintItemList(itemController.FetchAllItems());
+                HandleReports();
                 break;
             case 4:
-                HandleReports();
+                HandleExportToCSV();
                 break;
             case 5:
                 HandleSeedData();
@@ -109,48 +112,30 @@ internal class MenuHandler
             displayService.PrintItemList(itemsToDisplay, salesRecordToDisplay);
             ShowMainMenu();
         }
+    }
 
-        /*
-        string[] reportMenuOptions =
-        {"Display All Items in Database", "Display Sales for Month", "Display Sales for Year",
-                "Display Goal Report - UNDER CONSTRUCTION", "Return to Main Menu",};
+    private void HandleExportToCSV()
+    {
+        itemController.ExportToCSV();
 
-        string choice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-            .Title("Which operation would you like to perform? Use [green]arrow[/] and [green]enter[/] keys to make a selection.")
-            .PageSize(10)
-            .MoreChoicesText("Keep scrolling for more options")
-            .AddChoices(reportMenuOptions));
+        // This doesn't actually represent progress, it just looks cute.
+        AnsiConsole.Status()
+            .Start("Initiating backup", ctx =>
+            {
+                AnsiConsole.MarkupLine("Writing table");
+                Thread.Sleep(1000);
 
-        int menuSelection = Array.IndexOf(reportMenuOptions, choice) + 1;
+                ctx.Status("Writing more data to table");
+                ctx.Spinner(Spinner.Known.Star);
+                ctx.SpinnerStyle(Style.Parse("green"));
 
-        switch (menuSelection)
-        {
-            case 1:
-                displayService.PrintItemList(itemController.FetchAllItems());
-                ShowMainMenu();
-                break;
-            case 2:
-                // TODO display sales for the month
-                ShowMainMenu();
-                break;
-            case 3:
-                // TODO display yearly report incl avg monthly revenue and profit
-                ShowMainMenu();
-                break;
-            case 4:
-                AnsiConsole.Markup("Sorry, this feature isn't ready yet! The developer hasn't met his goal either!!");
-                Console.ReadLine();
-                ShowMainMenu();
-                break;
-            case 5:
-                ShowMainMenu();
-                break;
-            default:
-                AnsiConsole.Markup("[red]Invalid input![/]");
-                break;
-        }
+                AnsiConsole.MarkupLine("Finalizing backup...");
+                Thread.Sleep(1000);
+            });
 
-        */
+        AnsiConsole.Markup("[green]Backup to CSV completed successfully.[/] Press enter to return to main menu...");
+        Console.ReadLine();
+
+        ShowMainMenu();
     }
 }

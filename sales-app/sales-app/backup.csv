@@ -1,0 +1,16 @@
+Id,Brand,Type,Cost,Sale_price,Profit,Margin,Date_of_sale,Platform,Description
+1,Louis Vuitton,Bag,2600,3950,1350,52,2024-01-01,Grailed,none
+2,Balenciaga,Bag,1000,1450,450,45,2024-01-01,Wechat,none
+3,Loewe,Bag,500,780,280,56,2024-01-01,Wechat,none
+4,Prada,Bag,700,980,280,40,2024-01-01,Wechat,none
+5,ISSEY,Dress,500,598,98,20,2024-01-01,Wechat,none
+6,Max&co,Jacket,280,458,178,64,2024-01-01,Wechat,none
+7,Vivienne Westwood,Bag,420,748,328,78,2024-01-01,Wechat,none
+8,Vivienne Westwood,Bag,100,600,500,500,2024-01-01,Wechat,none
+9,Celine,Bag,720,998,278,39,2024-01-01,Wechat,none
+10,MM6,Bag,800,1300,500,63,2024-01-01,Wechat,none
+11,MM6,Bag,400,698,298,75,2024-01-01,Wechat,none
+12,Lemaire,Bag,450,1700,1250,278,2024-01-01,Wechat,none
+13,Vivienne Westwood,Jacket,400,648,248,62,2024-01-01,Wechat,none
+14,Vivienne Westwood,Bag,600,848,248,41,2024-01-01,Wechat,none
+15,Chloe,Bag,300,598,298,99,2024-01-01,Wechat,none

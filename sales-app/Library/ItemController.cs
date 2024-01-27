@@ -1,7 +1,6 @@
 ﻿using DataAccess;
 using Shared;
 using Spectre.Console;
-using System.Data;
 
 namespace Library;
 
@@ -9,7 +8,6 @@ public class ItemController
 {
     private readonly IDataAccess dataAccess;
     private readonly InputValidation inputValidation;
-    //private readonly StopwatchService stopwatchService;
 
     public ItemController(IDataAccess dataAccess, InputValidation inputValidation)
     {
@@ -96,8 +94,11 @@ public class ItemController
 
             return record;
         }
-        
+    }
 
+    public void ExportToCSV()
+    {
+        dataAccess.ExportToCSV();
     }
 
     public void SeedJanData()
@@ -124,5 +125,4 @@ public class ItemController
 
         dataAccess.DeleteItem(itemToDelete);
     }
-
 }

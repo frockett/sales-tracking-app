@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Shared;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace DataAccess;
@@ -134,8 +135,6 @@ public class SqliteDataAccess : IDataAccess
                 query.Append($" ORDER BY {orderBy}");
             }
 
-            
-
             // for testing
             Console.WriteLine(query.ToString());
 
@@ -186,6 +185,40 @@ public class SqliteDataAccess : IDataAccess
                 return true;
             }
         }
+    }
+
+    public void ExportToCSV()
+    {
+        string workingDirectory = Directory.GetCurrentDirectory();
+        string csvFileName = "backup.csv";
+        string databaseFilePath = Path.Combine(workingDirectory, "sales-and-inventory.db");
+        string csvFilePath = Path.Combine(workingDirectory, csvFileName);
+
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            using SqliteCommand command = connection.CreateCommand();
+            command.CommandText = $"SELECT * FROM sales";
+            using SqliteDataReader reader = command.ExecuteReader();
+            using StreamWriter writer = new StreamWriter(csvFilePath, false);
+
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                writer.Write(reader.GetName(i) + (i < reader.FieldCount - 1 ? "," : ""));
+            }
+            writer.WriteLine();
+
+            while (reader.Read())
+            {
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    writer.Write(reader[i].ToString() + (i < reader.FieldCount - 1 ? "," : ""));
+                }
+                writer.WriteLine();
+            }
+        }
+
+        return;
     }
 
     public int SeedJanData()

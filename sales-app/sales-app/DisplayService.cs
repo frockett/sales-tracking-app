@@ -5,7 +5,6 @@ namespace sales_app;
 
 internal class DisplayService
 {
-    //bool shouldWaitForInput;
     public void PrintItemList(List<ItemDTO> itemDTOs, SalesRecord? salesRecord = null, bool shouldWait = true)
     {
         Table table = new Table();
@@ -32,24 +31,4 @@ internal class DisplayService
             Console.ReadLine();
         }
     }
-    /*
-    public void PrintMonthlyAverages(List<CodingSession> sessions)
-    {
-        Table table = new Table();
-        table.Title("Monthly Averages");
-        table.AddColumn("Month");
-        table.AddColumn("Total Time");
-        table.AddColumn("Average Per Session");
-        table.AddColumn("Average Per Day");
-
-        foreach (var session in sessions)
-        {
-            table.AddRow(session.Month, session.TotalTime.ToString() + " hours total", session.AverageTime.ToString() + " hours per session", Math.Round((session.TotalTime / 30), 1).ToString() + " hours per day");
-        }
-        AnsiConsole.Write(table);
-        AnsiConsole.WriteLine("Press enter to continue");
-        Console.ReadLine();
-    }
-    */
-
 }
