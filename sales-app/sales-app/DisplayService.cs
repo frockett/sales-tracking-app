@@ -8,6 +8,7 @@ internal class DisplayService
     public void PrintItemList(List<ItemDTO> itemDTOs, SalesRecord? salesRecord = null, bool shouldWait = true)
     {
         Table table = new Table();
+        table.Title("Sales Data");
         table.AddColumns(new[] { "Id", "Brand", "Type", "Cost", "Sale Price", "Profit", "Margin", "Date of Sale", "Platform", "Description" });
 
         foreach (ItemDTO item in itemDTOs)
