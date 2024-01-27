@@ -38,7 +38,7 @@ public class ItemController
         return itemDTOs;
     }
 
-    public List<ItemDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    public List<ItemDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null) // I think these are unnecessary
     {
         List<Item> items = new List<Item>();        
         string reportType = inputValidation.GetReportType();
@@ -71,23 +71,33 @@ public class ItemController
     public SalesRecord CalculateSalesRecord(List<ItemDTO> items)
     {
         SalesRecord record = new SalesRecord();
-        float totalMargin = 0f;
 
-        record.Month = items.First().DateOfSale.Month;
-        record.Year = items.First().DateOfSale.Year;
-
-        foreach (ItemDTO item in items)
+        if (!items.Any())
         {
-            record.TotalSales += item.SalePrice;
-            record.GrossProfit += item.Profit;
-            totalMargin += item.Margin;
+            return record;
         }
+        else
+        {
+            float totalMargin = 0f;
 
-        record.AvgRevenue = record.TotalSales / items.Count();
-        record.AvgProfit = record.GrossProfit / items.Count();
-        record.AvgMargin = totalMargin / (float)items.Count();
+            record.Month = items.First().DateOfSale.Month;
+            record.Year = items.First().DateOfSale.Year;
 
-        return record;
+            foreach (ItemDTO item in items)
+            {
+                record.TotalSales += item.SalePrice;
+                record.GrossProfit += item.Profit;
+                totalMargin += item.Margin;
+            }
+
+            record.AvgRevenue = record.TotalSales / items.Count();
+            record.AvgProfit = record.GrossProfit / items.Count();
+            record.AvgMargin = totalMargin / (float)items.Count();
+
+            return record;
+        }
+        
+
     }
 
     public void SeedJanData()

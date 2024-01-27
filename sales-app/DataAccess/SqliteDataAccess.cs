@@ -134,7 +134,11 @@ public class SqliteDataAccess : IDataAccess
                 query.Append($" ORDER BY {orderBy}");
             }
 
+            
+
+            // for testing
             Console.WriteLine(query.ToString());
+
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = query.ToString();
 

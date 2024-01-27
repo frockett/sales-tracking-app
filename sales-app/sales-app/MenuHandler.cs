@@ -96,8 +96,20 @@ internal class MenuHandler
     private void HandleReports()
     {
         List<ItemDTO> itemsToDisplay = itemController.FetchItems();
-        displayService.PrintItemList(itemsToDisplay, itemController.CalculateSalesRecord(itemsToDisplay));
-        ShowMainMenu();
+        SalesRecord salesRecordToDisplay = itemController.CalculateSalesRecord(itemsToDisplay);
+
+        if (!itemsToDisplay.Any() || !salesRecordToDisplay.HasInformation())
+        {
+            AnsiConsole.Markup("[red]There is no matching data to display[/], please try another query. \nPress enter to return to main menu...");
+            Console.ReadLine();
+            ShowMainMenu();
+        }
+        else
+        {
+            displayService.PrintItemList(itemsToDisplay, salesRecordToDisplay);
+            ShowMainMenu();
+        }
+
         /*
         string[] reportMenuOptions =
         {"Display All Items in Database", "Display Sales for Month", "Display Sales for Year",

@@ -10,4 +10,9 @@ public class SalesRecord
     public int AvgRevenue { get; set; }
     public int AvgProfit { get; set; }
     public float AvgMargin { get; set; }
+
+    public bool HasInformation()
+    {
+        return Month != 0 && TotalSales != 0;
+    }
 }
