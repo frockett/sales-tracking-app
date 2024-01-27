@@ -68,6 +68,28 @@ public class ItemController
         return itemDTOs;
     }
 
+    public SalesRecord CalculateSalesRecord(List<ItemDTO> items)
+    {
+        SalesRecord record = new SalesRecord();
+        float totalMargin = 0f;
+
+        record.Month = items.First().DateOfSale.Month;
+        record.Year = items.First().DateOfSale.Year;
+
+        foreach (ItemDTO item in items)
+        {
+            record.TotalSales += item.SalePrice;
+            record.GrossProfit += item.Profit;
+            totalMargin += item.Margin;
+        }
+
+        record.AvgRevenue = record.TotalSales / items.Count();
+        record.AvgProfit = record.GrossProfit / items.Count();
+        record.AvgMargin = totalMargin / (float)items.Count();
+
+        return record;
+    }
+
     public void SeedJanData()
     {
         int rowsAffected = dataAccess.SeedJanData();

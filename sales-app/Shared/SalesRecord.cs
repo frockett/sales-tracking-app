@@ -9,4 +9,5 @@ public class SalesRecord
     public int GrossProfit { get; set; }
     public int AvgRevenue { get; set; }
     public int AvgProfit { get; set; }
+    public float AvgMargin { get; set; }
 }

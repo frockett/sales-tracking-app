@@ -1,4 +1,5 @@
 ﻿using Library;
+using Shared;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ internal class MenuHandler
 
     private void HandleDeleteItem()
     {
-        displayService.PrintItemList(itemController.FetchAllItems(), false);
+        displayService.PrintItemList(itemController.FetchAllItems(), null, false);
         itemController.DeleteItem();
         ShowMainMenu();
     }
@@ -94,7 +95,8 @@ internal class MenuHandler
 
     private void HandleReports()
     {
-        displayService.PrintItemList(itemController.FetchItems());
+        List<ItemDTO> itemsToDisplay = itemController.FetchItems();
+        displayService.PrintItemList(itemsToDisplay, itemController.CalculateSalesRecord(itemsToDisplay));
         ShowMainMenu();
         /*
         string[] reportMenuOptions =

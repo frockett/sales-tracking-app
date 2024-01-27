@@ -6,7 +6,7 @@ namespace sales_app;
 internal class DisplayService
 {
     //bool shouldWaitForInput;
-    public void PrintItemList(List<ItemDTO> itemDTOs, bool shouldWait = true)
+    public void PrintItemList(List<ItemDTO> itemDTOs, SalesRecord? salesRecord = null, bool shouldWait = true)
     {
         Table table = new Table();
         table.AddColumns(new[] { "Id", "Brand", "Type", "Cost", "Sale Price", "Profit", "Margin", "Date of Sale", "Platform", "Description" });
@@ -19,6 +19,13 @@ internal class DisplayService
         }
         AnsiConsole.Write(table);
         AnsiConsole.WriteLine();
+
+        Table aggTable = new Table();
+        aggTable.AddColumns(new[] { "Total Revenue", "Total Profit", "Avg Revenue", "Avg Profit", "Avg Markup" });
+
+        aggTable.AddRow(salesRecord.TotalSales.ToString(), salesRecord.GrossProfit.ToString(), salesRecord.AvgRevenue.ToString(),salesRecord.AvgProfit.ToString(),salesRecord.AvgMargin.ToString("F1") + "%");
+        AnsiConsole.Write(aggTable);
+
         if (shouldWait)
         {
             AnsiConsole.WriteLine("Press enter to continue");
