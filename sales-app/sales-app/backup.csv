@@ -14,3 +14,6 @@ Id,Brand,Type,Cost,Sale_price,Profit,Margin,Date_of_sale,Platform,Description
 13,Vivienne Westwood,Jacket,400,648,248,62,2024-01-01,Wechat,none
 14,Vivienne Westwood,Bag,600,848,248,41,2024-01-01,Wechat,none
 15,Chloe,Bag,300,598,298,99,2024-01-01,Wechat,none
+26,Balenciaga,Bag,800,1158,358,44.75,2024-01-27,Wechat,large red handbag
+27,Lemaire,Bag,580,1400,820,141.3793,2024-01-27,Wechat,brown bag
+28,Chloe,Bag,420,688,268,63.809525,2024-02-03,Wechat,purple medium-sized

@@ -136,7 +136,7 @@ public class SqliteDataAccess : IDataAccess
             }
 
             // for testing
-            Console.WriteLine(query.ToString());
+            Console.WriteLine(query.ToString() + "\n");
 
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = query.ToString();
