@@ -17,3 +17,6 @@ Id,Brand,Type,Cost,Sale_price,Profit,Margin,Date_of_sale,Platform,Description
 26,Balenciaga,Bag,800,1158,358,44.75,2024-01-27,Wechat,large red handbag
 27,Lemaire,Bag,580,1400,820,141.3793,2024-01-27,Wechat,brown bag
 28,Chloe,Bag,420,688,268,63.809525,2024-02-03,Wechat,purple medium-sized
+29,ferragamo,bag,358,658,300,83.79889,2024-02-04,Wechat,big black bag
+30,Prada,bag,500,788,288,57.6,2024-02-05,Wechat,gray small
+31,Gucci,bag,550,858,308,56,2024-02-05,Wechat,silver large

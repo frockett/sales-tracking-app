@@ -20,11 +20,15 @@ internal class DisplayService
         AnsiConsole.Write(table);
         AnsiConsole.WriteLine();
 
-        Table aggTable = new Table();
-        aggTable.AddColumns(new[] { "Total Revenue", "Total Profit", "Avg Revenue", "Avg Profit", "Avg Markup" });
+        if (salesRecord != null)
+        {
+            Table aggTable = new Table();
+            aggTable.AddColumns(new[] { "Total Revenue", "Total Profit", "Avg Revenue", "Avg Profit", "Avg Markup" });
 
-        aggTable.AddRow(salesRecord.TotalSales.ToString(), salesRecord.GrossProfit.ToString(), salesRecord.AvgRevenue.ToString(),salesRecord.AvgProfit.ToString(),salesRecord.AvgMargin.ToString("F1") + "%");
-        AnsiConsole.Write(aggTable);
+            aggTable.AddRow(salesRecord.TotalSales.ToString(), salesRecord.GrossProfit.ToString(), salesRecord.AvgRevenue.ToString(), salesRecord.AvgProfit.ToString(), salesRecord.AvgMargin.ToString("F1") + "%");
+            AnsiConsole.Write(aggTable);
+        }
+
 
         if (shouldWait)
         {
