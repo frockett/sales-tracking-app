@@ -42,43 +42,9 @@ internal class DisplayService
     {
         Console.Clear();
 
-        var revenueChart = new BarChart()
-                    .Width(200)
-                    .Label("[green bold underline]Total Sales[/]")
-                    .CenterLabel();
-
-        foreach (SummaryDto summary in summaries)
-        {
-            int value = summary.SalesRecord.TotalSales.Value;
-            string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
-            Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.TotalSales.Value), summaries.Max(s => s.SalesRecord.TotalSales.Value));
-            revenueChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.TotalSales), color);
-        }
-
-        AnsiConsole.Write(revenueChart);
-        AnsiConsole.WriteLine("\n\n");
-
-        var profitChart = new BarChart()
-                .Width(200)
-                .Label("[green bold underline]Total Profit[/]")
-                .CenterLabel();
-
-        foreach (SummaryDto summary in summaries)
-        {
-            int value = summary.SalesRecord.GrossProfit.Value;
-            string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
-            Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.GrossProfit.Value), summaries.Max(s => s.SalesRecord.GrossProfit.Value));
-            profitChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.GrossProfit), color);
-        }
-
-        AnsiConsole.Write(profitChart);
-        AnsiConsole.WriteLine("\n\n");
-
-        Console.ReadLine();
-
         var comboChart = new BarChart()
                 .Width(200)
-                .Label("[green bold underline]Total Profit[/]")
+                .Label("[green bold underline]Monthly Data[/]")
                 .CenterLabel();
 
         foreach (SummaryDto summary in summaries)
