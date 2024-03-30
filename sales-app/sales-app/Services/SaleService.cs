@@ -71,6 +71,8 @@ public class SaleService : ISaleService
     public SalesRecord CalculateSalesRecord(List<SaleDTO> items)
     {
         SalesRecord record = new SalesRecord();
+        record.TotalSales = 0;
+        record.GrossProfit = 0;
 
         if (!items.Any())
         {
