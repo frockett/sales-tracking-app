@@ -67,3 +67,49 @@ Id,Brand,Type,Cost,Sale_price,Profit,Margin,Date_of_sale,Platform,Description
 79,Vivienne Westwood,Bag,480,650,170,35.416664,2024-03-06,Wechat,boxy bag
 80,D&G,Top,150,280,130,86.666664,2024-03-06,Wechat,hippie style
 81,Balenciaga,Bag,800,1248,448,56,2024-03-06,Wechat,blue big
+82,Vivienne Westwood,Bag,600,855,255,42.5,2024-03-07,Wechat,black
+83,Miumiu,Bag,700,998,298,42.57143,2024-03-07,Wechat,black
+84,Vivienne Westwood,Bag,380,700,320,84.210526,2024-03-08,Wechat,black
+85,Balenciaga,Bag,1000,1488,488,48.8,2024-03-09,Wechat,pink
+86,Galliano,Shoes,250,528,278,111.2,2024-03-09,Wechat,stilleto heels
+87,Galliano,shoes,250,528,278,111.2,2024-03-09,Wechat,stilleto heels
+88,Vivienne Westwood,Bag,380,480,100,26.31579,2024-03-10,Wechat,big
+89,Vivienne Westwood,Bag,88,388,300,340.9091,2024-03-10,Wechat,blue
+90,Vivienne Westwood,Bag,380,588,208,54.73684,2024-03-10,Wechat,Pink
+91,Vivienne Westwood,Bag,460,788,328,71.304344,2024-03-10,Wechat,Black
+92,Vivienne Westwood,Bag,150,788,638,425.33334,2024-03-10,Wechat,big black
+93,Prada,bag,680,980,300,44.11765,2024-03-11,Wechat,brown
+94,Vivienne Westwood,bag,480,680,200,41.666664,2024-03-11,Wechat,red
+95,Balenciaga,bag,1000,1398,398,39.8,2024-03-10,wechat,pink
+96,Prada,shoes,300,550,250,83.33333,2024-03-11,Wechat,boots
+97,Vivienne Westwood,bag,300,750,450,150,2024-03-12,Wechat,gray big logo
+98,Vivienne Westwood,Bag,550,720,170,30.909092,2024-03-12,Wechat,big pink
+99,Miumiu,Bag,500,798,298,59.600002,2024-03-12,Wechat,dark brown
+100,Balenciaga,Bag,1100,1498,398,36.18182,2024-03-13,Wechat,purple
+101,Vivienne Westwood,Bag,480,688,208,43.333332,2024-03-13,Wechat,gold
+102,Vivienne Westwood,Bag,550,798,248,45.090908,2024-03-13,Wechat,pink
+103,Prada,Bag,1000,1388,388,38.800003,2024-03-13,Wechat,diamond
+104,Vivienne Westwood,Bag,150,488,338,225.33333,2024-03-14,Wechat,Dark pink
+105,Prada,Bag,700,990,290,41.428574,2024-03-14,Wechat,silver handle
+106,Burberry,Bag,500,780,280,56,2024-03-14,Wechat,military style
+107,Vivienne Westwood,Bagt,480,698,218,45.416668,2024-03-15,Wechat,box bag
+108,Balenciaga,Bag,1050,1498,448,42.666668,2024-03-15,Wechat,blue and gold
+109,Vivienne Westwood,Bag,500,850,350,70,2024-03-17,Wechat,light logo
+110,Vivienne Westwood,Bag,300,758,458,152.66666,2024-03-18,Wechat,blue kelly
+111,Balenciaga,Bag,1000,1298,298,29.800001,2024-03-19,Wechat,white
+112,Vivienne Westwood,bag,480,680,200,41.666664,2024-03-18,Wechat,purple cocktail
+113,Balenciaga,Bag,950,1388,438,46.105263,2024-03-18,Wechat,red gold
+114,Vivienne Westwood,Jacket,450,788,338,75.11111,2024-03-19,Wechat,beige
+115,Miumiu,Bag,550,868,318,57.81818,2024-03-20,Wechat,butterfly
+116,Balenciaga,bag,1000,1388,388,38.800003,2024-03-20,Wechat,beige big
+117,Balenciaga,Bag,1100,1488,388,35.272728,2024-03-20,Wechat,gray blue
+118,Gucci,Bag,610,878,268,43.934425,2024-03-21,Wechat,runway 2007
+120,Bulgari,Bag,750,1088,338,45.066666,2024-03-21,Wechat,brown
+121,Vivienne Westwood,Bag,500,790,290,58,2024-03-24,Wechat,black new
+122,Balenciaga,Bag,1100,1488,388,35.272728,2024-03-23,Wechat,red
+123,Balenciaga,Bag,1000,1398,398,39.8,2024-03-24,Wechat,gray green
+124,Dior,Bag,1500,1950,450,30.000002,2024-03-24,Wechat,sandal bag
+125,Balenciaga,Bag,1000,1398,398,39.8,2024-03-25,Wechat,long gray
+126,Balenciaga,Bag,1100,1488,388,35.272728,2024-03-26,Wechat,rock gray
+127,Chanel,Bag,780,1080,300,38.46154,2024-03-26,Wechat,gold
+128,Chanel,Bag,780,1088,308,39.48718,2024-03-26,Wechat,black
