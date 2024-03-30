@@ -6,6 +6,7 @@ using sales_app.Repositories;
 using sales_app.Services;
 using sales_app.UI;
 using sales_app.Models;
+using sales_app.Helpers;
 
 var builder = Host.CreateApplicationBuilder();
 
@@ -23,6 +24,7 @@ builder.Services.AddScoped<ISalesRepository, EFCoreSalesRepository>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<MenuHandler>();
 builder.Services.AddScoped<UserInput>();
+builder.Services.AddScoped<InputValidation>();
 builder.Services.AddScoped<DisplayService>();
 
 var app = builder.Build();

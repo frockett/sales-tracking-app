@@ -7,12 +7,12 @@ namespace sales_app.UI;
 
 internal class MenuHandler
 {
-    private readonly SaleService itemController;
+    private readonly ISaleService saleService;
     private readonly DisplayService displayService;
 
-    public MenuHandler(SaleService itemController, DisplayService display)
+    public MenuHandler(ISaleService saleService, DisplayService display)
     {
-        this.itemController = itemController;
+        this.saleService = saleService;
         displayService = display;
     }
 
@@ -66,14 +66,14 @@ internal class MenuHandler
 
     private void HandleInsertItem()
     {
-        itemController.InsertItem();
+        saleService.InsertItem();
         ShowMainMenu();
     }
 
     private void HandleDeleteItem()
     {
-        displayService.PrintItemList(itemController.FetchAllItems(), null, false);
-        itemController.DeleteItem();
+        displayService.PrintItemList(saleService.FetchAllItems(), null, false);
+        saleService.DeleteItem();
         ShowMainMenu();
     }
 
@@ -87,15 +87,15 @@ internal class MenuHandler
         }
         else
         {
-            itemController.SeedJanData();
+            saleService.SeedJanData();
             ShowMainMenu();
         }
     }
 
     private void HandleReports()
     {
-        List<SaleDTO> itemsToDisplay = itemController.FetchItems();
-        SalesRecord salesRecordToDisplay = itemController.CalculateSalesRecord(itemsToDisplay);
+        List<SaleDTO> itemsToDisplay = saleService.FetchItems();
+        SalesRecord salesRecordToDisplay = saleService.CalculateSalesRecord(itemsToDisplay);
 
         if (!itemsToDisplay.Any() || !salesRecordToDisplay.HasInformation())
         {
@@ -112,7 +112,7 @@ internal class MenuHandler
 
     private void HandleExportToCSV()
     {
-        itemController.ExportToCSV();
+        saleService.ExportToCSV();
 
         // This doesn't actually represent progress, it just looks cute.
         AnsiConsole.Status()
