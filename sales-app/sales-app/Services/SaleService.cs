@@ -105,28 +105,21 @@ public class SaleService : ISaleService
         repository.ExportToCSV();
     }
 
-    public void SeedJanData()
-    {
-        int rowsAffected = repository.SeedJanData();
-
-        Console.WriteLine($"{rowsAffected} rows affected!");
-    }
-
     public void DeleteItem()
     {
-        int itemToDelete = inputValidation.GetIntData("Enter the Id of the item to delete, or enter 0 to cancel: ");
+        int idToDelete = inputValidation.GetIntData("Enter the Id of the item to delete, or enter 0 to cancel: ");
 
-        if (itemToDelete <= 0)
+        if (idToDelete <= 0)
         {
             return;
         }
 
-        if (!repository.ValidateItemById(itemToDelete))
+        while (!repository.ValidateItemById(idToDelete))
         {
-            AnsiConsole.WriteLine($"[red]Item with ID {itemToDelete} does not exist");
-            itemToDelete = inputValidation.GetIntData("Enter a valid item ID: ");
+            AnsiConsole.WriteLine($"[red]Item with ID {idToDelete} does not exist");
+            idToDelete = inputValidation.GetIntData("Enter a valid item ID: ");
         }
 
-        repository.DeleteItem(itemToDelete);
+        repository.DeleteItem(idToDelete);
     }
 }

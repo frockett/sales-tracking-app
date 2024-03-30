@@ -82,12 +82,6 @@ public class EFCoreSalesRepository : ISalesRepository
         }
 
         return query.ToList();
-        
-    }
-
-    public void InitDatabase()
-    {
-        throw new NotImplementedException();
     }
 
     public void InsertItem(Sale sale)
@@ -102,11 +96,6 @@ public class EFCoreSalesRepository : ISalesRepository
             Console.WriteLine(ex.ToString());
             return;
         }
-    }
-
-    public int SeedJanData()
-    {
-        throw new NotImplementedException();
     }
 
     public void UpdateItem(Sale item)
