@@ -38,14 +38,6 @@ internal class DisplayService
         }
     }
 
-    // TODO - implement ability to print out bar chart that displays user-chosen info by month. For example, profit by month.
-    /* 1. Get all data from database
-     * 2. Sort data by month somehow, whether LINQ or separate lists or what idk
-     * 3. Get a SalesRecord for each month. Maybe I need a new data type for this that holds the month info too?
-     * 4. Send the List of SalesRecords to the print chart method
-     * 5. Get the highest number to set the width
-     * 6. Do a ForEach to AddItem for each month that has data
-     */
     public void PrintBarChart(List<SummaryDto> summaries)
     {
         var revenueChart = new BarChart()
@@ -55,8 +47,11 @@ internal class DisplayService
 
         foreach (SummaryDto summary in summaries)
         {
+            int value = summary.SalesRecord.TotalSales.Value;
             string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
-            revenueChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.TotalSales), Color.Green);
+            Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.TotalSales.Value), summaries.Max(s => s.SalesRecord.TotalSales.Value));
+            revenueChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.TotalSales), color);
+            Console.WriteLine(color.ToString());
         }
 
         AnsiConsole.Write(revenueChart);
@@ -64,23 +59,41 @@ internal class DisplayService
 
         var profitChart = new BarChart()
             .Width(200)
-            .Label("[green bold underline]Number of fruits[/]")
+            .Label("[green bold underline]Total Profit[/]")
             .CenterLabel();
 
         foreach (SummaryDto summary in summaries)
         {
+            int value = summary.SalesRecord.GrossProfit.Value;
             string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
-            profitChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.GrossProfit), Color.Green);
+            Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.GrossProfit.Value), summaries.Max(s => s.SalesRecord.GrossProfit.Value));
+            profitChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.GrossProfit), color);
+            Console.WriteLine(color.ToString());
         }
 
         AnsiConsole.Write(profitChart);
-
-        /*
-        .AddItem("Apple", 12000, Color.Yellow)
-        .AddItem("Orange", 5400, Color.Green)
-        .AddItem("Banana", 3300, Color.Red);
-        */
+        AnsiConsole.WriteLine("\n\n");
 
         Console.ReadLine();
+    }
+
+    private Color GetColorForValue(int value, int min, int max)
+    {
+        double ratio = Convert.ToDouble((value - min)) / Convert.ToDouble((max - min));
+
+        byte red, green;  
+
+        if (ratio <= 0.5)
+        {
+            red = 255;
+            green = (byte)(ratio * 2 * 255); 
+        }
+        else
+        {
+            // Transition from yellow to green
+            green = 255; 
+            red = (byte)((1 - (ratio - 0.5) * 2) * 255); 
+        }
+        return new Color(red, green, 0);
     }
 }
