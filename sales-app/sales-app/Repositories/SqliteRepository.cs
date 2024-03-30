@@ -159,7 +159,7 @@ public class SqliteRepository : ISalesRepository
         }
     }
 
-    public bool ValidateItemById(int id)
+    public Sale ValidateItemById(int id)
     {
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -167,14 +167,36 @@ public class SqliteRepository : ISalesRepository
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = $@"SELECT EXISTS(SELECT 1 FROM sales WHERE Id = {id})";
             int checkQuery = Convert.ToInt32(command.ExecuteScalar());
-            connection.Close();
             if (checkQuery == 0)
             {
-                return false;
+                return null;
             }
             else
             {
-                return true;
+                SqliteDataReader reader = command.ExecuteReader();
+
+                Sale item = new();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        item.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        item.Brand = reader.GetString(reader.GetOrdinal("Brand"));
+                        item.Type = reader.GetString(reader.GetOrdinal("Type"));
+                        item.Cost = reader.GetInt32(reader.GetOrdinal("Cost"));
+                        item.SalePrice = reader.GetInt32(reader.GetOrdinal("Sale_price"));
+                        item.Profit = reader.GetInt32(reader.GetOrdinal("Profit"));
+                        item.Margin = reader.GetInt32(reader.GetOrdinal("Margin"));
+                        item.DateOfSale = DateOnly.Parse(reader.GetString(reader.GetOrdinal("Date_of_sale")));
+                        item.Platform = reader.GetString(reader.GetOrdinal("Platform"));
+                        item.Description = reader.GetString(reader.GetOrdinal("Description"));
+                    }
+
+                    return item;
+                }
+
+                else return null;
             }
         }
     }

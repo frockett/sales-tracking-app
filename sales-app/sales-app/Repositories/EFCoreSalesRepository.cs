@@ -31,7 +31,6 @@ public class EFCoreSalesRepository : ISalesRepository
             Console.WriteLine(ex.Message);
             return;
         }
-        
     }
 
     public void ExportToCSV()
@@ -117,8 +116,8 @@ public class EFCoreSalesRepository : ISalesRepository
         throw new NotImplementedException();
     }
 
-    public bool ValidateItemById(int id)
+    public Sale? ValidateItemById(int id)
     {
-        return context.Sales.Any(s => s.Id == id);
+        return context.Sales.FirstOrDefault(s => s.Id == id);
     }
 }

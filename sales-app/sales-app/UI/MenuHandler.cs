@@ -53,7 +53,7 @@ internal class MenuHandler
                 HandleReports();
                 break;
             case 4:
-                HandleViewGraph();
+                HandleViewGraphs();
                 break;
             case 5:
                 HandleExportToCSV();
@@ -62,13 +62,6 @@ internal class MenuHandler
                 Environment.Exit(0);
                 break;
         }
-    }
-
-    private void HandleViewGraph()
-    {
-        List<SummaryDto> summaries = saleService.FetchSummaries();
-        displayService.PrintBarCharts(summaries);
-        ShowMainMenu();
     }
 
     private void HandleInsertItem()
@@ -100,6 +93,12 @@ internal class MenuHandler
             displayService.PrintItemList(itemsToDisplay, salesRecordToDisplay);
             ShowMainMenu();
         }
+    }
+    private void HandleViewGraphs()
+    {
+        List<SummaryDto> summaries = saleService.FetchSummaries();
+        displayService.PrintBarCharts(summaries);
+        ShowMainMenu();
     }
 
     private void HandleExportToCSV()

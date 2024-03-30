@@ -108,19 +108,24 @@ public class SaleService : ISaleService
     public void DeleteItem()
     {
         int idToDelete = inputValidation.GetIntData("Enter the Id of the item to delete, or enter 0 to cancel: ");
-
         if (idToDelete <= 0)
         {
             return;
         }
 
-        while (!repository.ValidateItemById(idToDelete))
+        Sale? itemToDelete = repository.ValidateItemById(idToDelete);
+
+        while (itemToDelete == null)
         {
             AnsiConsole.WriteLine($"[red]Item with ID {idToDelete} does not exist");
             idToDelete = inputValidation.GetIntData("Enter a valid item ID: ");
         }
 
-        repository.DeleteItem(idToDelete);
+        if (!AnsiConsole.Confirm($"Delete {itemToDelete.Brand} {itemToDelete.Type} with description {itemToDelete.Description} sold on {itemToDelete.DateOfSale}?"))
+        {
+            return;
+        }
+        else repository.DeleteItem(itemToDelete.Id);
     }
 
     public List<SummaryDto> FetchSummaries()

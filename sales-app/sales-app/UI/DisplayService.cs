@@ -40,6 +40,8 @@ internal class DisplayService
 
     public void PrintBarCharts(List<SummaryDto> summaries)
     {
+        Console.Clear();
+
         var revenueChart = new BarChart()
                     .Width(200)
                     .Label("[green bold underline]Total Sales[/]")
@@ -51,16 +53,15 @@ internal class DisplayService
             string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
             Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.TotalSales.Value), summaries.Max(s => s.SalesRecord.TotalSales.Value));
             revenueChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.TotalSales), color);
-            Console.WriteLine(color.ToString());
         }
 
         AnsiConsole.Write(revenueChart);
         AnsiConsole.WriteLine("\n\n");
 
         var profitChart = new BarChart()
-            .Width(200)
-            .Label("[green bold underline]Total Profit[/]")
-            .CenterLabel();
+                .Width(200)
+                .Label("[green bold underline]Total Profit[/]")
+                .CenterLabel();
 
         foreach (SummaryDto summary in summaries)
         {
@@ -68,10 +69,29 @@ internal class DisplayService
             string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
             Color color = GetColorForValue(value, summaries.Min(s => s.SalesRecord.GrossProfit.Value), summaries.Max(s => s.SalesRecord.GrossProfit.Value));
             profitChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.GrossProfit), color);
-            Console.WriteLine(color.ToString());
         }
 
         AnsiConsole.Write(profitChart);
+        AnsiConsole.WriteLine("\n\n");
+
+        Console.ReadLine();
+
+        var comboChart = new BarChart()
+                .Width(200)
+                .Label("[green bold underline]Total Profit[/]")
+                .CenterLabel();
+
+        foreach (SummaryDto summary in summaries)
+        {
+            int value1 = summary.SalesRecord.GrossProfit.Value;
+            int value2 = summary.SalesRecord.TotalSales.Value;
+            string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
+            Color color = GetColorForValue(value1, summaries.Min(s => s.SalesRecord.GrossProfit.Value), summaries.Max(s => s.SalesRecord.GrossProfit.Value));
+            comboChart.AddItem($"{monthName} Revenue", Convert.ToDouble(summary.SalesRecord.TotalSales), color);
+            comboChart.AddItem($"{monthName} Profit", Convert.ToDouble(summary.SalesRecord.GrossProfit), color);
+        }
+
+        AnsiConsole.Write(comboChart);
         AnsiConsole.WriteLine("\n\n");
 
         Console.ReadLine();
