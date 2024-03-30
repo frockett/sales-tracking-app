@@ -16,7 +16,7 @@ internal class DisplayService
         {
             table.AddRow(item.Id.ToString(), item.Brand, item.Type, item.Cost.ToString() + " rmb",
                         item.SalePrice.ToString() + " rmb", item.Profit.ToString() + " rmb", item.Margin.ToString() + "%",
-                        item.DateOfSale.ToString(), item.Platform, item.Description);
+                        item.DateOfSale.Value.ToString("yyyy-MM-dd"), item.Platform, item.Description);
         }
         AnsiConsole.Write(table);
         AnsiConsole.WriteLine();

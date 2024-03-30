@@ -76,10 +76,18 @@ public class EFCoreSalesRepository : ISalesRepository
             query = query.Where(s => s.DateOfSale.Value.Month == month);
         }
 
-        // TODO implement other ordering schemes, currently it's always by date
-      
-        query.OrderBy(s => s.DateOfSale);
- 
+        query = orderBy switch
+        {
+            DataOrder.Brand => query.OrderBy(s => s.Brand),
+            DataOrder.Date_of_sale => query.OrderBy(s => s.DateOfSale),
+            DataOrder.Type => query.OrderBy(s => s.Type),
+            DataOrder.Cost => query.OrderBy(s => s.Cost),
+            DataOrder.Sale_price => query.OrderBy(s => s.SalePrice),
+            DataOrder.Profit => query.OrderBy(s => s.Profit),
+            DataOrder.Margin => query.OrderBy(s => s.Margin),
+            DataOrder.Platform => query.OrderBy(s => s.Platform),
+            _ => query.OrderBy(s => s.DateOfSale)
+        };
 
         return query.ToList();
     }
