@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using sales_app.Helpers;
 using sales_app.Models;
 using System.Linq;
 
@@ -61,7 +62,7 @@ public class EFCoreSalesRepository : ISalesRepository
         return context.Sales.OrderBy(s => s.DateOfSale).ToList();
     }
 
-    public List<Sale> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    public List<Sale> GetItems(DataOrder orderBy, int? year = null, int? month = null, string? groupBy = null)
     {
         var query = context.Sales.AsQueryable();
 
@@ -76,10 +77,9 @@ public class EFCoreSalesRepository : ISalesRepository
         }
 
         // TODO implement other ordering schemes, currently it's always by date
-        if (!String.IsNullOrEmpty(orderBy))
-        {
-            query.OrderBy(s => s.DateOfSale);
-        }
+      
+        query.OrderBy(s => s.DateOfSale);
+ 
 
         return query.ToList();
     }

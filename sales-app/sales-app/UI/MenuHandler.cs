@@ -25,7 +25,6 @@ internal class MenuHandler
                 "Delete Item",
                 "Generate Reports",
                 "Export Database to CSV",
-                "DEVELOPER TOOLS: Seed Data",
                 "Exit Program",};
 
         string choice = AnsiConsole.Prompt(
@@ -56,9 +55,6 @@ internal class MenuHandler
                 HandleExportToCSV();
                 break;
             case 5:
-                HandleSeedData();
-                break;
-            case 6:
                 Environment.Exit(0);
                 break;
         }
@@ -75,21 +71,6 @@ internal class MenuHandler
         displayService.PrintItemList(saleService.FetchAllItems(), null, false);
         saleService.DeleteItem();
         ShowMainMenu();
-    }
-
-    private void HandleSeedData()
-    {
-        if (!AnsiConsole.Confirm("Are you sure you want to seed January's data? WARNING: only seed Jan data if database is empty"))
-        {
-            AnsiConsole.Markup("\nOkay! Press any key to return to the main menu\n");
-            Console.ReadKey(true);
-            ShowMainMenu();
-        }
-        else
-        {
-            saleService.SeedJanData();
-            ShowMainMenu();
-        }
     }
 
     private void HandleReports()

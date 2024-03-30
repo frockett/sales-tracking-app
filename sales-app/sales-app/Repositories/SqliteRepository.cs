@@ -2,6 +2,7 @@
 using sales_app.Repositories;
 using sales_app.Models;
 using System.Text;
+using sales_app.Helpers;
 
 namespace DataAccess;
 
@@ -99,7 +100,7 @@ public class SqliteRepository : ISalesRepository
             return items;
         }
     }
-    public List<Sale> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    public List<Sale> GetItems(DataOrder orderBy, int? year = null, int? month = null, string? groupBy = null)
     {
         List<Sale> items = new List<Sale>();
 
@@ -124,10 +125,7 @@ public class SqliteRepository : ISalesRepository
                 query.Append($" GROUP BY {groupBy}");
             }
 
-            if (!string.IsNullOrEmpty(orderBy))
-            {
-                query.Append($" ORDER BY {orderBy}");
-            }
+            query.Append($" ORDER BY {orderBy.ToString()}");
 
             // for testing
             Console.WriteLine(query.ToString() + "\n");

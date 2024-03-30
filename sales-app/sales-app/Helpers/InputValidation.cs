@@ -66,7 +66,7 @@ public class InputValidation
 
     public string GetGroupBy()
     {
-        string[] groupOptions = Enum.GetNames(typeof(DataOrderingEnum));
+        string[] groupOptions = Enum.GetNames(typeof(DataOrder));
 
         string selection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -79,16 +79,16 @@ public class InputValidation
         return selection;
     }
 
-    public string GetOrderBy()
+    public DataOrder GetOrderBy()
     {
-        string[] orderOptions = Enum.GetNames(typeof(DataOrderingEnum));
+        //DataOrder[] orderOptions = Enum.GetNames(typeof(DataOrder));
 
-        string selection = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
+        DataOrder selection = AnsiConsole.Prompt(
+            new SelectionPrompt<DataOrder>()
             .Title("\nWhich column do you want to order by?\n")
             .PageSize(10)
             .MoreChoicesText("Keep scrolling for more options")
-            .AddChoices(orderOptions));
+            .AddChoices(Enum.GetValues<DataOrder>()));
 
         AnsiConsole.Clear();
         return selection;

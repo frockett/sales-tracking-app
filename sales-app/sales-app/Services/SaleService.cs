@@ -46,13 +46,13 @@ public class SaleService : ISaleService
         switch (reportType)
         {
             case "all items":
-                items = repository.GetItems(null, null, null, inputValidation.GetOrderBy());
+                items = repository.GetItems(inputValidation.GetOrderBy(), null, null, null);
                 break;
             case "monthly":
-                items = repository.GetItems(DateTime.Now.Year, inputValidation.GetMonth().Month, null, inputValidation.GetOrderBy());
+                items = repository.GetItems(inputValidation.GetOrderBy(), DateTime.Now.Year, inputValidation.GetMonth().Month, null);
                 break;
             case "yearly":
-                items = repository.GetItems(inputValidation.GetYear().Year, null, inputValidation.GetGroupBy(), inputValidation.GetOrderBy());
+                items = repository.GetItems(inputValidation.GetOrderBy(), inputValidation.GetYear().Year, null, inputValidation.GetGroupBy());
                 break;
             case "goal":
                 break;
