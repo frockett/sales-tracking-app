@@ -20,17 +20,17 @@ public class SaleService : ISaleService
     public void InsertItem()
     {
         ItemDTO itemDTOToConvert = inputValidation.GetItemInformation();
-        Item itemToInput = ItemMapper.ToDomainModel(itemDTOToConvert);
+        Sale itemToInput = ItemMapper.ToDomainModel(itemDTOToConvert);
         repository.InsertItem(itemToInput);
     }
 
     public List<ItemDTO> FetchAllItems()
     {
-        List<Item> items = repository.GetAllItems();
+        List<Sale> items = repository.GetAllItems();
 
         List<ItemDTO> itemDTOs = new List<ItemDTO>();
 
-        foreach (Item item in items)
+        foreach (Sale item in items)
         {
             ItemDTO itemDTO = ItemMapper.ToDTO(item);
             itemDTOs.Add(itemDTO);
@@ -40,7 +40,7 @@ public class SaleService : ISaleService
 
     public List<ItemDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null) // I think these are unnecessary
     {
-        List<Item> items = new List<Item>();
+        List<Sale> items = new List<Sale>();
         string reportType = inputValidation.GetReportType();
 
         switch (reportType)
@@ -60,7 +60,7 @@ public class SaleService : ISaleService
 
         List<ItemDTO> itemDTOs = new List<ItemDTO>();
 
-        foreach (Item item in items)
+        foreach (Sale item in items)
         {
             ItemDTO itemDTO = ItemMapper.ToDTO(item);
             itemDTOs.Add(itemDTO);
@@ -78,10 +78,10 @@ public class SaleService : ISaleService
         }
         else
         {
-            float totalMargin = 0f;
+            int? totalMargin = 0;
 
-            record.Month = items.First().DateOfSale.Month;
-            record.Year = items.First().DateOfSale.Year;
+            record.Month = items.First().DateOfSale.Value.Month;
+            record.Year = items.First().DateOfSale.Value.Year;
 
             foreach (ItemDTO item in items)
             {

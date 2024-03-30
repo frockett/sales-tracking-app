@@ -5,7 +5,7 @@ namespace sales_app.Helpers;
 
 public static class ItemMapper
 {
-    public static ItemDTO ToDTO(Item item)
+    public static ItemDTO ToDTO(Sale item)
     {
         //Console.WriteLine($"Current item ID is {item.Id}");
         return new ItemDTO
@@ -23,9 +23,9 @@ public static class ItemMapper
         };
     }
 
-    public static Item ToDomainModel(ItemDTO dto)
+    public static Sale ToDomainModel(ItemDTO dto)
     {
-        return new Item
+        return new Sale
         {
             Brand = dto.Brand,
             Type = dto.Type,

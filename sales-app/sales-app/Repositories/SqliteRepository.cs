@@ -36,19 +36,19 @@ public class SqliteRepository : ISalesRepository
         }
     }
 
-    public void InsertItem(Item item)
+    public void InsertItem(Sale item)
     {
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
             connection.Open();
             SqliteCommand command = connection.CreateCommand();
             command.CommandText = $@"INSERT INTO sales(Brand, Type, Cost, Sale_price, Profit, Margin, Date_of_sale, Platform, Description)
-                                    VALUES ('{item.Brand}', '{item.Type}', {item.Cost}, {item.SalePrice}, {item.Profit}, {item.Margin}, '{item.DateOfSale.ToString("yyyy-MM-dd")}', '{item.Platform}','{item.Description}')";
+                                    VALUES ('{item.Brand}', '{item.Type}', {item.Cost}, {item.SalePrice}, {item.Profit}, {item.Margin}, '{item.DateOfSale.ToString()}', '{item.Platform}','{item.Description}')";
             command.ExecuteNonQuery();
             connection.Close();
         }
     }
-    public void UpdateItem(Item item)
+    public void UpdateItem(Sale item)
     {
         throw new NotImplementedException ();
     }
@@ -63,9 +63,9 @@ public class SqliteRepository : ISalesRepository
             connection.Close();
         }
     }
-    public List<Item> GetAllItems()
+    public List<Sale> GetAllItems()
     {
-        List<Item> items = new List<Item>();
+        List<Sale> items = new List<Sale>();
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -80,7 +80,7 @@ public class SqliteRepository : ISalesRepository
                 while (reader.Read())
                 {
                     items.Add(
-                        new Item
+                        new Sale
                         {
                             Id = reader.GetInt32(0),
                             Brand = reader.GetString(1),
@@ -89,7 +89,7 @@ public class SqliteRepository : ISalesRepository
                             SalePrice = reader.GetInt32(4),
                             Profit = reader.GetInt32(5),
                             Margin  = reader.GetInt32(6),
-                            DateOfSale = DateTime.Parse(reader.GetString(7)),
+                            DateOfSale = DateOnly.Parse(reader.GetString(7)),
                             Platform = reader.GetString(8),
                             Description = reader.GetString(9),
                         });
@@ -99,9 +99,9 @@ public class SqliteRepository : ISalesRepository
             return items;
         }
     }
-    public List<Item> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    public List<Sale> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
     {
-        List<Item> items = new List<Item>();
+        List<Sale> items = new List<Sale>();
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -141,7 +141,7 @@ public class SqliteRepository : ISalesRepository
             {
                 while (reader.Read())
                 {
-                    items.Add(new Item
+                    items.Add(new Sale
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("Id")),
                         Brand = reader.GetString(reader.GetOrdinal("Brand")),
@@ -149,8 +149,8 @@ public class SqliteRepository : ISalesRepository
                         Cost = reader.GetInt32(reader.GetOrdinal("Cost")),
                         SalePrice = reader.GetInt32(reader.GetOrdinal("Sale_price")),
                         Profit = reader.GetInt32(reader.GetOrdinal("Profit")),
-                        Margin = reader.GetFloat(reader.GetOrdinal("Margin")),
-                        DateOfSale = DateTime.Parse(reader.GetString(reader.GetOrdinal("Date_of_sale"))),
+                        Margin = reader.GetInt32(reader.GetOrdinal("Margin")),
+                        DateOfSale = DateOnly.Parse(reader.GetString(reader.GetOrdinal("Date_of_sale"))),
                         Platform = reader.GetString(reader.GetOrdinal("Platform")),
                         Description = reader.GetString(reader.GetOrdinal("Description")),
                     });

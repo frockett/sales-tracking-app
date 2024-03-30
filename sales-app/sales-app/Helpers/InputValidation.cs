@@ -101,8 +101,8 @@ public class InputValidation
         int cost = GetIntData("Cost to purchase?\n");
         int salePrice = GetIntData("Price at which the item sold?\n");
         int profit = GetProfit(cost, salePrice);
-        float margin = GetMargin(cost, salePrice);
-        DateTime date = GetDateOfSale();
+        int margin = GetMargin(cost, salePrice);
+        DateOnly date = GetDateOfSale();
         string? platform = GetStringData("Platform of sale?\n");
         string? description = GetStringData("Enter brief description: ");
 
@@ -120,10 +120,10 @@ public class InputValidation
         };
     }
 
-    private float GetMargin(int cost, int revenue)
+    private int GetMargin(int cost, int revenue)
     {
         int profit = revenue - cost;
-        float margin = profit / (float)cost * 100;
+        int margin = profit / cost * 100;
         AnsiConsole.WriteLine($"Margin is {margin}%");
         return margin;
     }
@@ -134,7 +134,7 @@ public class InputValidation
         return profit;
     }
 
-    private DateTime GetDateOfSale()
+    private DateOnly GetDateOfSale()
     {
         DateTime dateOfSale;
 
@@ -148,7 +148,7 @@ public class InputValidation
         if (selection == "Today")
         {
             dateOfSale = DateTime.Today;
-            return dateOfSale;
+            return DateOnly.FromDateTime(dateOfSale);
         }
         else
         {
@@ -162,7 +162,7 @@ public class InputValidation
                 monthAndDate = AnsiConsole.Ask<string>("Enter month and day of sale as mm-dd");
             }
             Console.WriteLine(dateOfSale.ToString());
-            return dateOfSale;
+            return DateOnly.FromDateTime(dateOfSale);
         }
     }
 

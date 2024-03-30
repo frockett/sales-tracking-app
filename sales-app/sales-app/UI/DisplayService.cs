@@ -15,8 +15,8 @@ internal class DisplayService
         foreach (ItemDTO item in itemDTOs)
         {
             table.AddRow(item.Id.ToString(), item.Brand, item.Type, item.Cost.ToString() + " rmb",
-                        item.SalePrice.ToString() + " rmb", item.Profit.ToString() + " rmb", item.Margin.ToString("F1") + "%",
-                        item.DateOfSale.ToString("MM-dd"), item.Platform, item.Description);
+                        item.SalePrice.ToString() + " rmb", item.Profit.ToString() + " rmb", item.Margin.ToString() + "%",
+                        item.DateOfSale.ToString(), item.Platform, item.Description);
         }
         AnsiConsole.Write(table);
         AnsiConsole.WriteLine();
@@ -26,7 +26,7 @@ internal class DisplayService
             Table aggTable = new Table();
             aggTable.AddColumns(new[] { "Total Revenue", "Total Profit", "Avg Revenue", "Avg Profit", "Avg Markup" });
 
-            aggTable.AddRow(salesRecord.TotalSales.ToString(), salesRecord.GrossProfit.ToString(), salesRecord.AvgRevenue.ToString(), salesRecord.AvgProfit.ToString(), salesRecord.AvgMargin.ToString("F1") + "%");
+            aggTable.AddRow(salesRecord.TotalSales.ToString(), salesRecord.GrossProfit.ToString(), salesRecord.AvgRevenue.ToString(), salesRecord.AvgProfit.ToString(), salesRecord.AvgMargin.ToString() + "%");
             AnsiConsole.Write(aggTable);
         }
 

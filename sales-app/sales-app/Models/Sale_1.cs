@@ -1,6 +1,6 @@
 ﻿namespace sales_app.Models;
 
-public class Item
+public class Sale1
 {
     public int Id { get; set; }
     public string? Brand { get; set; }

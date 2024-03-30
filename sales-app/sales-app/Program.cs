@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using sales_app.Repositories;
 using sales_app.Services;
 using sales_app.UI;
-using sales_app.Helpers;
 using sales_app.Models;
-using Microsoft.Extensions.Options;
 
 var builder = Host.CreateApplicationBuilder();
 

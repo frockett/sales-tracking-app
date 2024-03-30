@@ -4,6 +4,13 @@ namespace sales_app.Repositories;
 
 public class EFCoreSalesRepository : ISalesRepository
 {
+    private readonly SalesAndInventoryContext context;
+
+    public EFCoreSalesRepository(SalesAndInventoryContext context)
+    {
+        this.context = context;
+    }
+
     public void DeleteItem(int id)
     {
         throw new NotImplementedException();
@@ -14,12 +21,12 @@ public class EFCoreSalesRepository : ISalesRepository
         throw new NotImplementedException();
     }
 
-    public List<Item> GetAllItems()
+    public List<Sale> GetAllItems()
     {
-        throw new NotImplementedException();
+        return context.Sales.OrderBy(s => s.DateOfSale).ToList();
     }
 
-    public List<Item> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
+    public List<Sale> GetItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null)
     {
         throw new NotImplementedException();
     }
@@ -29,7 +36,7 @@ public class EFCoreSalesRepository : ISalesRepository
         throw new NotImplementedException();
     }
 
-    public void InsertItem(Item item)
+    public void InsertItem(Sale item)
     {
         throw new NotImplementedException();
     }
@@ -39,7 +46,7 @@ public class EFCoreSalesRepository : ISalesRepository
         throw new NotImplementedException();
     }
 
-    public void UpdateItem(Item item)
+    public void UpdateItem(Sale item)
     {
         throw new NotImplementedException();
     }
