@@ -122,4 +122,26 @@ public class SaleService : ISaleService
 
         repository.DeleteItem(idToDelete);
     }
+
+    public List<SummaryDto> FetchSummaries()
+    {
+        var sales = repository.GetAllItems();
+        List<SaleDTO> saleDtos = new List<SaleDTO>();
+
+        foreach (Sale sale in sales)
+        {
+            SaleDTO itemDTO = ItemMapper.ToDTO(sale);
+            saleDtos.Add(itemDTO);
+        }
+
+        var summaries = saleDtos.GroupBy(s => new { s.DateOfSale.Value.Year, s.DateOfSale.Value.Month })
+                                .Select(g => new SummaryDto
+                                {
+                                    Year = g.Key.Year,
+                                    Month = g.Key.Month,
+                                    SalesRecord = CalculateSalesRecord(g.ToList())
+                                }).ToList();
+
+        return summaries;
+    }
 }

@@ -24,6 +24,7 @@ internal class MenuHandler
                 {"Insert Item",
                 "Delete Item",
                 "Generate Reports",
+                "View Graph",
                 "Export Database to CSV",
                 "Exit Program",};
 
@@ -52,12 +53,22 @@ internal class MenuHandler
                 HandleReports();
                 break;
             case 4:
-                HandleExportToCSV();
+                HandleViewGraph();
                 break;
             case 5:
+                HandleExportToCSV();
+                break;
+            case 6:
                 Environment.Exit(0);
                 break;
         }
+    }
+
+    private void HandleViewGraph()
+    {
+        List<SummaryDto> summaries = saleService.FetchSummaries();
+        displayService.PrintBarChart(summaries);
+        ShowMainMenu();
     }
 
     private void HandleInsertItem()

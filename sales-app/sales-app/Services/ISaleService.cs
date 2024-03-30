@@ -10,6 +10,7 @@ namespace sales_app.Services
         void ExportToCSV();
         List<SaleDTO> FetchAllItems();
         List<SaleDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null);
+        List<SummaryDto> FetchSummaries();
         void InsertItem();
     }
 }

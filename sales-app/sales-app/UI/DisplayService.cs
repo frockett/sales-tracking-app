@@ -1,6 +1,7 @@
 ﻿using sales_app.DTOs;
 using sales_app.Models;
 using Spectre.Console;
+using System.Globalization;
 
 namespace sales_app.UI;
 
@@ -30,11 +31,56 @@ internal class DisplayService
             AnsiConsole.Write(aggTable);
         }
 
-
         if (shouldWait)
         {
             AnsiConsole.WriteLine("Press enter to continue");
             Console.ReadLine();
         }
+    }
+
+    // TODO - implement ability to print out bar chart that displays user-chosen info by month. For example, profit by month.
+    /* 1. Get all data from database
+     * 2. Sort data by month somehow, whether LINQ or separate lists or what idk
+     * 3. Get a SalesRecord for each month. Maybe I need a new data type for this that holds the month info too?
+     * 4. Send the List of SalesRecords to the print chart method
+     * 5. Get the highest number to set the width
+     * 6. Do a ForEach to AddItem for each month that has data
+     */
+    public void PrintBarChart(List<SummaryDto> summaries)
+    {
+        var revenueChart = new BarChart()
+                    .Width(200)
+                    .Label("[green bold underline]Total Sales[/]")
+                    .CenterLabel();
+
+        foreach (SummaryDto summary in summaries)
+        {
+            string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
+            revenueChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.TotalSales), Color.Green);
+        }
+
+        AnsiConsole.Write(revenueChart);
+        AnsiConsole.WriteLine("\n\n");
+
+        var profitChart = new BarChart()
+            .Width(200)
+            .Label("[green bold underline]Number of fruits[/]")
+            .CenterLabel();
+
+        foreach (SummaryDto summary in summaries)
+        {
+            string? monthName = CultureInfo.InvariantCulture.DateTimeFormat.GetAbbreviatedMonthName(summary.Month);
+            profitChart.AddItem($"{monthName}", Convert.ToDouble(summary.SalesRecord.GrossProfit), Color.Green);
+        }
+
+        AnsiConsole.Write(profitChart);
+
+        /*
+        .AddItem("Apple", 12000, Color.Yellow)
+        .AddItem("Orange", 5400, Color.Green)
+        .AddItem("Banana", 3300, Color.Red);
+        */
+
+        Console.ReadLine();
     }
 }
