@@ -123,9 +123,9 @@ public class InputValidation
     private int GetMargin(int cost, int revenue)
     {
         int profit = revenue - cost;
-        int margin = profit / cost * 100;
+        float margin = (float)profit / cost * 100;
         AnsiConsole.WriteLine($"Margin is {margin}%");
-        return margin;
+        return Convert.ToInt32(margin);
     }
 
     private int GetProfit(int expense, int revenue)

@@ -121,7 +121,9 @@ public class SaleService : ISaleService
             idToDelete = inputValidation.GetIntData("Enter a valid item ID: ");
         }
 
-        if (!AnsiConsole.Confirm($"Delete {itemToDelete.Brand} {itemToDelete.Type} with description {itemToDelete.Description} sold on {itemToDelete.DateOfSale}?"))
+        AnsiConsole.WriteLine("\n"); // Just add a bit of spacing for readability
+
+        if (!AnsiConsole.Confirm($"Delete [green]{itemToDelete.Brand}[/] [blue]{itemToDelete.Type.ToLower()}[/] with description [yellow]{itemToDelete.Description.ToLower()}[/] sold on [red]{itemToDelete.DateOfSale:yyyy-MM-dd}[/]?"))
         {
             return;
         }

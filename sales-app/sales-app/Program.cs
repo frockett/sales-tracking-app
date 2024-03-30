@@ -7,6 +7,7 @@ using sales_app.Services;
 using sales_app.UI;
 using sales_app.Models;
 using sales_app.Helpers;
+using Microsoft.Extensions.Logging;
 
 var builder = Host.CreateApplicationBuilder();
 
@@ -14,6 +15,11 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
 
+builder.Logging.ClearProviders(); // Clears default logging providers
+builder.Logging.AddConsole(); // Adds console logging
+builder.Logging.SetMinimumLevel(LogLevel.Information); // Sets the global minimum log level to Information
+// Specifically reduce EF Core command logging level to Warning
+builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 
 builder.Services.AddDbContext<SalesAndInventoryContext>(options =>
 {
