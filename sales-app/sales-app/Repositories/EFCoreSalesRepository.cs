@@ -1,4 +1,5 @@
-﻿using sales_app.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using sales_app.Models;
 using System.Linq;
 
 namespace sales_app.Repositories;
@@ -14,12 +15,45 @@ public class EFCoreSalesRepository : ISalesRepository
 
     public void DeleteItem(int id)
     {
-        throw new NotImplementedException();
+        var sale = context.Sales.FirstOrDefault(s => s.Id == id);
+        try
+        {
+            if (sale != null)
+            {
+                context.Sales.Remove(sale);
+                context.SaveChanges();
+            }
+            else return;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return;
+        }
+        
     }
 
     public void ExportToCSV()
     {
-        throw new NotImplementedException();
+        string workingDirectory = Directory.GetCurrentDirectory();
+        string csvFileName = "backupTEST.csv";
+        string csvFilePath = Path.Combine(workingDirectory, csvFileName);
+
+        var sales = context.Sales.ToList();
+
+        if (sales.Any())
+        {
+            using var writer = new StreamWriter(csvFilePath, false);
+
+            var header = string.Join(",", typeof(Sale).GetProperties().Select(p => p.Name));
+            writer.WriteLine(header);
+
+            foreach (var sale in sales)
+            {
+                var line = string.Join(",", typeof(Sale).GetProperties().Select(p => p.GetValue(sale)?.ToString()));
+                writer.WriteLine(line);
+            }
+        }
     }
 
     public List<Sale> GetAllItems()
@@ -56,9 +90,18 @@ public class EFCoreSalesRepository : ISalesRepository
         throw new NotImplementedException();
     }
 
-    public void InsertItem(Sale item)
+    public void InsertItem(Sale sale)
     {
-        throw new NotImplementedException();
+        context.Sales.Add(sale);
+        try
+        {
+            context.SaveChanges();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            return;
+        }
     }
 
     public int SeedJanData()
@@ -73,6 +116,6 @@ public class EFCoreSalesRepository : ISalesRepository
 
     public bool ValidateItemById(int id)
     {
-        throw new NotImplementedException();
+        return context.Sales.Any(s => s.Id == id);
     }
 }
