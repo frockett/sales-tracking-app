@@ -7,10 +7,10 @@ namespace sales_app.UI;
 
 internal class MenuHandler
 {
-    private readonly ItemService itemController;
+    private readonly SaleService itemController;
     private readonly DisplayService displayService;
 
-    public MenuHandler(ItemService itemController, DisplayService display)
+    public MenuHandler(SaleService itemController, DisplayService display)
     {
         this.itemController = itemController;
         displayService = display;

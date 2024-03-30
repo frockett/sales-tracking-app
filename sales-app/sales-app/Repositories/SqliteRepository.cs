@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess;
 
-public class SqliteRepository : IRepository
+public class SqliteRepository : ISalesRepository
 {
     private readonly string? connectionString;
 

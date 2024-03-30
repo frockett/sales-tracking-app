@@ -1,35 +1,49 @@
-﻿using DataAccess;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using sales_app.Repositories;
 using sales_app.Services;
 using sales_app.UI;
 using sales_app.Helpers;
+using sales_app.Models;
+using Microsoft.Extensions.Options;
 
-namespace sales_app;
+var builder = Host.CreateApplicationBuilder();
 
-internal class Program
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+
+builder.Services.AddDbContext<SalesAndInventoryContext>(options =>
 {
-    static void Main(string[] args)
-    {
-        // selects implementation of IDbMethods
-        var dataAccess = InitializeSqliteDatabase();
+    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+});
 
-        //var stopwatchService = new StopwatchService();
-        var inputValidation = new InputValidation();
-        var itemController = new ItemService(dataAccess, inputValidation);
-        var displayService = new DisplayService();
-        var menuHandler = new MenuHandler(itemController, displayService);
+builder.Services.AddScoped<ISalesRepository, EFCoreSalesRepository>();
+builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<MenuHandler>();
+builder.Services.AddScoped<UserInput>();
+builder.Services.AddScoped<DisplayService>();
 
-        menuHandler.ShowMainMenu();
-    }
+var app = builder.Build();
 
-    static IRepository InitializeSqliteDatabase()
-    {
-        string? connectionString;
-        IConfiguration config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
-        connectionString = config.GetConnectionString("DefaultConnection");
+var scope = app.Services.CreateScope();
 
-        var sqliteDataAccess = new SqliteRepository(connectionString);
-        sqliteDataAccess.InitDatabase();
-        return sqliteDataAccess;
-    }
+var menuHandler = app.Services.GetRequiredService<MenuHandler>();
+
+menuHandler.ShowMainMenu();
+
+
+/*
+IRepository InitializeSqliteDatabase()
+{
+    string? connectionString;
+    connectionString = configuration.GetConnectionString("DefaultConnection");
+
+    var sqliteDataAccess = new SqliteRepository(connectionString);
+    //sqliteDataAccess.InitDatabase();
+    return sqliteDataAccess;
 }
+*/

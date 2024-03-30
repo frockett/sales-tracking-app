@@ -6,12 +6,12 @@ using Spectre.Console;
 
 namespace sales_app.Services;
 
-public class ItemService
+public class SaleService : ISaleService
 {
-    private readonly IRepository repository;
+    private readonly ISalesRepository repository;
     private readonly InputValidation inputValidation;
 
-    public ItemService(IRepository repository, InputValidation inputValidation)
+    public SaleService(ISalesRepository repository, InputValidation inputValidation)
     {
         this.repository = repository;
         this.inputValidation = inputValidation;

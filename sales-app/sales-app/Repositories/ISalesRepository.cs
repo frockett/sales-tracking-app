@@ -2,7 +2,7 @@
 
 namespace sales_app.Repositories;
 
-public interface IRepository
+public interface ISalesRepository
 {
     public void InitDatabase();
     public void InsertItem(Item item);
