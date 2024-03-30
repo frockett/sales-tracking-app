@@ -34,16 +34,3 @@ var scope = app.Services.CreateScope();
 var menuHandler = app.Services.GetRequiredService<MenuHandler>();
 
 menuHandler.ShowMainMenu();
-
-
-/*
-IRepository InitializeSqliteDatabase()
-{
-    string? connectionString;
-    connectionString = configuration.GetConnectionString("DefaultConnection");
-
-    var sqliteDataAccess = new SqliteRepository(connectionString);
-    //sqliteDataAccess.InitDatabase();
-    return sqliteDataAccess;
-}
-*/
