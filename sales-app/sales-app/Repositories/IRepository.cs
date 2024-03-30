@@ -1,8 +1,8 @@
-﻿using Shared;
+﻿using sales_app.Models;
 
-namespace DataAccess;
+namespace sales_app.Repositories;
 
-public interface IDataAccess
+public interface IRepository
 {
     public void InitDatabase();
     public void InsertItem(Item item);

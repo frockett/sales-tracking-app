@@ -1,15 +1,16 @@
-﻿using Library;
-using Shared;
+﻿using sales_app.DTOs;
+using sales_app.Models;
+using sales_app.Services;
 using Spectre.Console;
 
-namespace sales_app;
+namespace sales_app.UI;
 
 internal class MenuHandler
 {
-    private readonly ItemController itemController;
+    private readonly ItemService itemController;
     private readonly DisplayService displayService;
 
-    public MenuHandler(ItemController itemController, DisplayService display)
+    public MenuHandler(ItemService itemController, DisplayService display)
     {
         this.itemController = itemController;
         displayService = display;
@@ -22,9 +23,9 @@ internal class MenuHandler
         string[] menuOptions =
                 {"Insert Item",
                 "Delete Item",
-                "Generate Reports", 
+                "Generate Reports",
                 "Export Database to CSV",
-                "DEVELOPER TOOLS: Seed Data", 
+                "DEVELOPER TOOLS: Seed Data",
                 "Exit Program",};
 
         string choice = AnsiConsole.Prompt(

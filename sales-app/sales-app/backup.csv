@@ -113,3 +113,11 @@ Id,Brand,Type,Cost,Sale_price,Profit,Margin,Date_of_sale,Platform,Description
 126,Balenciaga,Bag,1100,1488,388,35.272728,2024-03-26,Wechat,rock gray
 127,Chanel,Bag,780,1080,300,38.46154,2024-03-26,Wechat,gold
 128,Chanel,Bag,780,1088,308,39.48718,2024-03-26,Wechat,black
+129,Loewe,Bag,550,1000,450,81.818184,2024-03-27,Wechat,black
+130,Balenciaga,bag,900,1280,380,42.22222,2024-03-27,Wechat,orange
+131,Balenciaga,Bag,700,1488,788,112.57143,2024-03-27,Wechat,pink
+132,Balenciaga,Bag,1000,1390,390,39,2024-03-27,Wechat,gold brown
+133,Chanel,shoes,400,650,250,62.5,2024-03-28,Wechat,sandal
+135,Gucci,sunglasses,200,450,250,125,2024-03-28,Wechat,purple
+136,Galliano,Shoes,400,776,376,94,2024-03-29,Wechat,Denim
+137,Dior,Accessory,300,580,280,93.333336,2024-03-29,Wechat,Choker necklace

@@ -1,16 +1,15 @@
 ﻿using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Configuration;
-using Shared;
-using System.Runtime.CompilerServices;
+using sales_app.Repositories;
+using sales_app.Models;
 using System.Text;
 
 namespace DataAccess;
 
-public class SqliteDataAccess : IDataAccess
+public class SqliteRepository : IRepository
 {
     private readonly string? connectionString;
 
-    public SqliteDataAccess(string connectionString)
+    public SqliteRepository(string connectionString)
     {
         this.connectionString = connectionString;
     }
@@ -36,12 +35,7 @@ public class SqliteDataAccess : IDataAccess
             connection.Close();
         }
     }
-    private string? GetConnectionStringFromSettings(string desiredString)
-    {
-        var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
-        IConfiguration configuration = builder.Build();
-        return configuration.GetConnectionString(desiredString);
-    }
+
     public void InsertItem(Item item)
     {
         using (SqliteConnection connection = new SqliteConnection(connectionString))

@@ -1,0 +1,41 @@
+﻿using sales_app.DTOs;
+using sales_app.Models;
+
+namespace sales_app.Helpers;
+
+public static class ItemMapper
+{
+    public static ItemDTO ToDTO(Item item)
+    {
+        //Console.WriteLine($"Current item ID is {item.Id}");
+        return new ItemDTO
+        {
+            Id = item.Id,
+            Brand = item.Brand,
+            Type = item.Type,
+            Cost = item.Cost,
+            SalePrice = item.SalePrice,
+            Profit = item.Profit,
+            Margin = item.Margin,
+            DateOfSale = item.DateOfSale,
+            Platform = item.Platform,
+            Description = item.Description,
+        };
+    }
+
+    public static Item ToDomainModel(ItemDTO dto)
+    {
+        return new Item
+        {
+            Brand = dto.Brand,
+            Type = dto.Type,
+            Cost = dto.Cost,
+            SalePrice = dto.SalePrice,
+            Profit = dto.Profit,
+            Margin = dto.Margin,
+            DateOfSale = dto.DateOfSale,
+            Platform = dto.Platform,
+            Description = dto.Description,
+        };
+    }
+}

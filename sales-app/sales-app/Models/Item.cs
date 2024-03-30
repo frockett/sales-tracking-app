@@ -1,4 +1,4 @@
-﻿namespace Shared;
+﻿namespace sales_app.Models;
 
 public class Item
 {

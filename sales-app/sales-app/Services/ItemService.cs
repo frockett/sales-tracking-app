@@ -1,17 +1,19 @@
-﻿using DataAccess;
-using Shared;
+﻿using sales_app.DTOs;
+using sales_app.Helpers;
+using sales_app.Models;
+using sales_app.Repositories;
 using Spectre.Console;
 
-namespace Library;
+namespace sales_app.Services;
 
-public class ItemController
+public class ItemService
 {
-    private readonly IRepository dataAccess;
+    private readonly IRepository repository;
     private readonly InputValidation inputValidation;
 
-    public ItemController(IRepository dataAccess, InputValidation inputValidation)
+    public ItemService(IRepository repository, InputValidation inputValidation)
     {
-        this.dataAccess = dataAccess;
+        this.repository = repository;
         this.inputValidation = inputValidation;
     }
 
@@ -19,12 +21,12 @@ public class ItemController
     {
         ItemDTO itemDTOToConvert = inputValidation.GetItemInformation();
         Item itemToInput = ItemMapper.ToDomainModel(itemDTOToConvert);
-        dataAccess.InsertItem(itemToInput);
+        repository.InsertItem(itemToInput);
     }
 
     public List<ItemDTO> FetchAllItems()
     {
-        List<Item> items = dataAccess.GetAllItems();
+        List<Item> items = repository.GetAllItems();
 
         List<ItemDTO> itemDTOs = new List<ItemDTO>();
 
@@ -38,19 +40,19 @@ public class ItemController
 
     public List<ItemDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null) // I think these are unnecessary
     {
-        List<Item> items = new List<Item>();        
+        List<Item> items = new List<Item>();
         string reportType = inputValidation.GetReportType();
 
         switch (reportType)
         {
             case "all items":
-                items = dataAccess.GetItems(null, null, null, inputValidation.GetOrderBy());
+                items = repository.GetItems(null, null, null, inputValidation.GetOrderBy());
                 break;
             case "monthly":
-                items = dataAccess.GetItems(DateTime.Now.Year, inputValidation.GetMonth().Month, null, inputValidation.GetOrderBy());
+                items = repository.GetItems(DateTime.Now.Year, inputValidation.GetMonth().Month, null, inputValidation.GetOrderBy());
                 break;
             case "yearly":
-                items = dataAccess.GetItems(inputValidation.GetYear().Year, null, inputValidation.GetGroupBy(), inputValidation.GetOrderBy());
+                items = repository.GetItems(inputValidation.GetYear().Year, null, inputValidation.GetGroupBy(), inputValidation.GetOrderBy());
                 break;
             case "goal":
                 break;
@@ -90,7 +92,7 @@ public class ItemController
 
             record.AvgRevenue = record.TotalSales / items.Count();
             record.AvgProfit = record.GrossProfit / items.Count();
-            record.AvgMargin = totalMargin / (float)items.Count();
+            record.AvgMargin = totalMargin / items.Count();
 
             return record;
         }
@@ -98,12 +100,12 @@ public class ItemController
 
     public void ExportToCSV()
     {
-        dataAccess.ExportToCSV();
+        repository.ExportToCSV();
     }
 
     public void SeedJanData()
     {
-        int rowsAffected = dataAccess.SeedJanData();
+        int rowsAffected = repository.SeedJanData();
 
         Console.WriteLine($"{rowsAffected} rows affected!");
     }
@@ -117,12 +119,12 @@ public class ItemController
             return;
         }
 
-        if (!dataAccess.ValidateItemById(itemToDelete))
+        if (!repository.ValidateItemById(itemToDelete))
         {
             AnsiConsole.WriteLine($"[red]Item with ID {itemToDelete} does not exist");
             itemToDelete = inputValidation.GetIntData("Enter a valid item ID: ");
         }
 
-        dataAccess.DeleteItem(itemToDelete);
+        repository.DeleteItem(itemToDelete);
     }
 }

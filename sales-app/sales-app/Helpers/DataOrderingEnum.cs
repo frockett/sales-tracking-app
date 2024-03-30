@@ -1,5 +1,4 @@
-﻿
-namespace Shared
+﻿namespace sales_app.Helpers
 {
     public enum DataOrderingEnum
     {

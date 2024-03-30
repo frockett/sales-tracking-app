@@ -1,4 +1,4 @@
-﻿namespace Shared;
+﻿namespace sales_app.DTOs;
 
 public class ItemDTO
 {

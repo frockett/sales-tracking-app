@@ -1,7 +1,8 @@
-﻿using Shared;
+﻿using sales_app.DTOs;
+using sales_app.Models;
 using Spectre.Console;
 
-namespace sales_app;
+namespace sales_app.UI;
 
 internal class DisplayService
 {
@@ -13,8 +14,8 @@ internal class DisplayService
 
         foreach (ItemDTO item in itemDTOs)
         {
-            table.AddRow(item.Id.ToString(),item.Brand, item.Type, item.Cost.ToString() + " rmb", 
-                        item.SalePrice.ToString() + " rmb", item.Profit.ToString() + " rmb", item.Margin.ToString("F1") + "%", 
+            table.AddRow(item.Id.ToString(), item.Brand, item.Type, item.Cost.ToString() + " rmb",
+                        item.SalePrice.ToString() + " rmb", item.Profit.ToString() + " rmb", item.Margin.ToString("F1") + "%",
                         item.DateOfSale.ToString("MM-dd"), item.Platform, item.Description);
         }
         AnsiConsole.Write(table);
