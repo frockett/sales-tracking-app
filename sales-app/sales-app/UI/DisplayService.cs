@@ -38,7 +38,7 @@ internal class DisplayService
         }
     }
 
-    public void PrintBarChart(List<SummaryDto> summaries)
+    public void PrintBarCharts(List<SummaryDto> summaries)
     {
         var revenueChart = new BarChart()
                     .Width(200)

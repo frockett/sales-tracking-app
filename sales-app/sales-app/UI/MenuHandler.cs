@@ -67,7 +67,7 @@ internal class MenuHandler
     private void HandleViewGraph()
     {
         List<SummaryDto> summaries = saleService.FetchSummaries();
-        displayService.PrintBarChart(summaries);
+        displayService.PrintBarCharts(summaries);
         ShowMainMenu();
     }
 

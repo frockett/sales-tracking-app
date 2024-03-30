@@ -37,8 +37,14 @@ public class EFCoreSalesRepository : ISalesRepository
     public void ExportToCSV()
     {
         string workingDirectory = Directory.GetCurrentDirectory();
-        string csvFileName = "backupTEST.csv";
-        string csvFilePath = Path.Combine(workingDirectory, csvFileName);
+        string backupsDirectory = Path.Combine(workingDirectory, "Backups");
+        string csvFileName = $"backup{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+        string csvFilePath = Path.Combine(backupsDirectory, csvFileName);
+
+        if (!Directory.Exists(backupsDirectory))
+        {
+            Directory.CreateDirectory(backupsDirectory);
+        }
 
         var sales = context.Sales.ToList();
 
