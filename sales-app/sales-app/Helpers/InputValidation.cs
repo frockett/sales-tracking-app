@@ -94,7 +94,7 @@ public class InputValidation
         return selection;
     }
 
-    public ItemDTO GetItemInformation()
+    public SaleDTO GetItemInformation()
     {
         string? brand = GetStringData("Brand?\n");
         string? type = GetStringData("Type?\n");
@@ -106,7 +106,7 @@ public class InputValidation
         string? platform = GetStringData("Platform of sale?\n");
         string? description = GetStringData("Enter brief description: ");
 
-        return new ItemDTO
+        return new SaleDTO
         {
             Brand = brand,
             Type = type,

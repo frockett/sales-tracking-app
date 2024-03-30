@@ -19,26 +19,26 @@ public class SaleService : ISaleService
 
     public void InsertItem()
     {
-        ItemDTO itemDTOToConvert = inputValidation.GetItemInformation();
+        SaleDTO itemDTOToConvert = inputValidation.GetItemInformation();
         Sale itemToInput = ItemMapper.ToDomainModel(itemDTOToConvert);
         repository.InsertItem(itemToInput);
     }
 
-    public List<ItemDTO> FetchAllItems()
+    public List<SaleDTO> FetchAllItems()
     {
         List<Sale> items = repository.GetAllItems();
 
-        List<ItemDTO> itemDTOs = new List<ItemDTO>();
+        List<SaleDTO> itemDTOs = new List<SaleDTO>();
 
         foreach (Sale item in items)
         {
-            ItemDTO itemDTO = ItemMapper.ToDTO(item);
+            SaleDTO itemDTO = ItemMapper.ToDTO(item);
             itemDTOs.Add(itemDTO);
         }
         return itemDTOs;
     }
 
-    public List<ItemDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null) // I think these are unnecessary
+    public List<SaleDTO> FetchItems(int? year = null, int? month = null, string? groupBy = null, string? orderBy = null) // I think these are unnecessary
     {
         List<Sale> items = new List<Sale>();
         string reportType = inputValidation.GetReportType();
@@ -58,17 +58,17 @@ public class SaleService : ISaleService
                 break;
         }
 
-        List<ItemDTO> itemDTOs = new List<ItemDTO>();
+        List<SaleDTO> itemDTOs = new List<SaleDTO>();
 
         foreach (Sale item in items)
         {
-            ItemDTO itemDTO = ItemMapper.ToDTO(item);
+            SaleDTO itemDTO = ItemMapper.ToDTO(item);
             itemDTOs.Add(itemDTO);
         }
         return itemDTOs;
     }
 
-    public SalesRecord CalculateSalesRecord(List<ItemDTO> items)
+    public SalesRecord CalculateSalesRecord(List<SaleDTO> items)
     {
         SalesRecord record = new SalesRecord();
 
@@ -83,7 +83,7 @@ public class SaleService : ISaleService
             record.Month = items.First().DateOfSale.Value.Month;
             record.Year = items.First().DateOfSale.Value.Year;
 
-            foreach (ItemDTO item in items)
+            foreach (SaleDTO item in items)
             {
                 record.TotalSales += item.SalePrice;
                 record.GrossProfit += item.Profit;

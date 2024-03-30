@@ -1,6 +1,6 @@
 ﻿namespace sales_app.DTOs;
 
-public class ItemDTO
+public class SaleDTO
 {
     public int Id { get; set; }
     public string? Brand { get; set; }

@@ -94,7 +94,7 @@ internal class MenuHandler
 
     private void HandleReports()
     {
-        List<ItemDTO> itemsToDisplay = itemController.FetchItems();
+        List<SaleDTO> itemsToDisplay = itemController.FetchItems();
         SalesRecord salesRecordToDisplay = itemController.CalculateSalesRecord(itemsToDisplay);
 
         if (!itemsToDisplay.Any() || !salesRecordToDisplay.HasInformation())
